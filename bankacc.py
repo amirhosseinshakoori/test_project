@@ -212,3 +212,14 @@ def generate_exp_date(self) -> datetime.date:
     """Generate an expiration date 2 years from now."""
     return datetime.date.today() + datetime.timedelta(days=730) 
 
+def save(self)-> None:
+    """Save the card data to a JSON file."""
+    data = {
+        "card_number": self.card_number,
+        "cvv": self.cvv,
+        "expiration": self.exp_date.isoformat()  
+       }
+       
+    with open('cards.json', 'a') as f:
+        json.dump(data, f)
+           
