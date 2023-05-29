@@ -223,3 +223,9 @@ def save(self)-> None:
     with open('cards.json', 'a') as f:
         json.dump(data, f)
            
+def load(self, data):
+        """Load card data from a JSON object."""
+        self.card_number = data['card_number']   
+        self.cvv = data['cvv']    
+        self.exp_date = datetime.strptime(data['expiration'], '%Y-%m-%d').date() 
+    
