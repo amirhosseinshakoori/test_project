@@ -143,4 +143,8 @@ class BankAccount:
         """
         return self.transaction_history
     
+
+    def get_balance(self):
+         return self.balance
+    
     
