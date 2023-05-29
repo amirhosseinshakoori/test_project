@@ -158,4 +158,7 @@ class BankAccount:
         hashed_password = hash_object.hexdigest()        
         return hashed_password == self.password
     
-    
+    def save_accounts(self):
+        """Save all accounts to a JSON file."""
+        with open('accounts.json', 'w') as f:
+            json.dump(BankAccount.accounts, f)
