@@ -190,4 +190,11 @@ def generate_card(self) -> None:
     self.cvv = self.generate_cvv()
     self.exp_date = self.generate_exp_date()
 
-    
+def generate_number(self) -> str: 
+    """
+        Generate a random 16-digit card number.
+        
+        Returns:
+            str: The generated card number
+    """
+    return ''.join(random.choice('0123456789') for _ in range(16))
