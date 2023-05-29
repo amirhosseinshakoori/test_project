@@ -93,6 +93,19 @@ class BankAccount:
              self.balance -= amount
              self.transaction_history.append(("Withdrawal", amount))
              return True
+      
             
+    def check_balance(func):
     
+        def wrapper(self, *args, **kwargs):  
+      
+        # Check if account has enough balance
+            if self.balance < MIN_BALANCE:
+                print("Insufficient funds") 
+            return
+            
+       # Call original function   
+            return func(self, *args, **kwargs)
+        
+        return wrapper
 
