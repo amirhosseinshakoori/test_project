@@ -198,3 +198,12 @@ def generate_number(self) -> str:
             str: The generated card number
     """
     return ''.join(random.choice('0123456789') for _ in range(16))
+
+def generate_cvv(self) -> int:
+    """
+       Generate a random 3-digit CVV.
+       
+       Returns:
+           int: The generated CVV
+    """
+    return random.randint(100, 999)
