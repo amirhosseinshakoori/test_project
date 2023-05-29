@@ -162,3 +162,10 @@ class BankAccount:
         """Save all accounts to a JSON file."""
         with open('accounts.json', 'w') as f:
             json.dump(BankAccount.accounts, f)
+
+
+    def load_accounts(self):
+        """Load account data from a JSON file."""
+        with open('accounts.json') as f:
+            data = json.load(f)
+        BankAccount.accounts = data
