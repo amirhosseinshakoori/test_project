@@ -93,8 +93,8 @@ class BankAccount:
              self.balance -= amount
              self.transaction_history.append(("Withdrawal", amount))
              return True
-      
-            
+
+
     def check_balance(func):
     
         def wrapper(self, *args, **kwargs):  
@@ -109,3 +109,26 @@ class BankAccount:
         
         return wrapper
 
+    def transfer(self, amount: float, recipient: 'BankAccount', password: str) -> None:
+        """
+        Transfer funds to another account.
+
+        Args:
+            amount (float): The amount to transfer.
+            recipient (BankAccount): The account to transfer funds to.
+            password (str): The password for the sender's account.
+
+        Raises:
+            ValueError: If the specified amount is greater than the 
+            account balance or if the password is incorrect.
+        """
+        if amount > self.balance:
+            raise ValueError("Insufficient balance")
+        if password != self.password:
+            raise ValueError("Incorrect password")
+        self.balance -= amount
+        self.balance -= self.calculate_fees(amount)
+        self.transaction_history.append(('Transfer', amount, recipient.account_number))
+        recipient.deposit(amount)
+
+    
