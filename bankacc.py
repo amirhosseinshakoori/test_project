@@ -31,3 +31,19 @@ class BankAccount:
         # self.card = Card().generate_card(self.account_number)
         self.transaction_history = []
         BankAccount.accounts[self.card.card_number] = self
+
+    @property
+    def balance(self) -> float:
+        """Get the current account balance."""
+        return self._balance
+
+    @balance.setter
+    def balance(self, value: float) -> None:
+        """
+        Set the current account balance.
+
+        Args:
+            value (float): The new account balance.
+        """
+        self._balance = value
+
