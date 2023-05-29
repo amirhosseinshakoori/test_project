@@ -147,5 +147,15 @@ class BankAccount:
     def get_balance(self):
          return self.balance
     
+
     def apply_fee(self, amount):
          self.balance -= amount
+
+
+    def validate_password(self, password):
+        password = password.encode()        
+        hash_object = hashlib.sha256(password) 
+        hashed_password = hash_object.hexdigest()        
+        return hashed_password == self.password
+    
+    
