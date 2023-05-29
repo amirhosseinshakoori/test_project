@@ -63,4 +63,15 @@ class BankAccount:
             hashed_password = hash_object.hexdigest()
         return hashed_password
     
+    def deposit(self, amount: float) -> None:
+        """
+        Add funds to the account balance.
+
+        Args:
+            amount (float): The amount to deposit.
+        """
+        self.balance += amount
+        self.transaction_history.append(("Deposit", amount))
+
+    
 
