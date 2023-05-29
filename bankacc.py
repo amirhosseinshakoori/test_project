@@ -73,5 +73,26 @@ class BankAccount:
         self.balance += amount
         self.transaction_history.append(("Deposit", amount))
 
+    def withdraw(self, amount: float) -> None:
+        """
+        Subtract funds from the account balance.
+
+        Args:
+            amount (float): The amount to withdraw.
+
+        Raises:
+            ValueError: If the specified amount is greater than the account balance.
+        """
+        if self.balance - amount < MIN_BALANCE:
+             print("Insufficient funds")
+        else:
+            self.balance -= amount + FEE
+            if amount > self.balance:
+                return False
+            else:
+             self.balance -= amount
+             self.transaction_history.append(("Withdrawal", amount))
+             return True
+            
     
 
