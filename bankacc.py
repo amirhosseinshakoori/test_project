@@ -131,4 +131,16 @@ class BankAccount:
         self.transaction_history.append(('Transfer', amount, recipient.account_number))
         recipient.deposit(amount)
 
+    def get_transaction_history(self) -> List[Tuple[str, float]]:
+        """
+        Get the transaction history for the account.
+
+        Returns:
+            List[Tuple[str, float]]: A list of tuples representing 
+            the transaction history, where each tuple contains the type
+            of transaction ('Deposit', 'Withdrawal', or 'Transfer') 
+            and the amount involved.
+        """
+        return self.transaction_history
+    
     
