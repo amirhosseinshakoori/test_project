@@ -169,3 +169,25 @@ class BankAccount:
         with open('accounts.json') as f:
             data = json.load(f)
         BankAccount.accounts = data
+
+
+class Card:         
+        
+   def __init__(self, card_number: str, cvv: int, exp_date: datetime.date) -> None:
+        """
+        Initialize a Card object.
+        
+        Args:
+            card_number (str): The card number
+            cvv (int): The CVV code
+            exp_date (datetime.date): The card expiration date        
+        """     
+
+    
+def generate_card(self) -> None:
+    """Generate a random card number, CVV and expiration date."""
+    self.card_number = self.generate_card_number() 
+    self.cvv = self.generate_cvv()
+    self.exp_date = self.generate_exp_date()
+
+    
