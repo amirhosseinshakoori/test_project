@@ -180,6 +180,8 @@ class BankAccount:
         with open('accounts.json') as f:
             data = json.load(f)
         BankAccount.accounts = data
+        logging.info('Accounts loaded from file')
+        
 
 
 class Card:         
