@@ -181,7 +181,7 @@ class BankAccount:
             data = json.load(f)
         BankAccount.accounts = data
         logging.info('Accounts loaded from file')
-        
+
 
 
 class Card:         
@@ -195,13 +195,11 @@ class Card:
             cvv (int): The CVV code
             exp_date (datetime.date): The card expiration date        
         """     
-
-    
-def generate_card(self) -> None:
-    """Generate a random card number, CVV and expiration date."""
-    self.card_number = self.generate_card_number() 
-    self.cvv = self.generate_cvv()
-    self.exp_date = self.generate_exp_date()
+        """Generate a random card number, CVV and expiration date."""
+        self.card_number = self.generate_card_number() 
+        self.cvv = self.generate_cvv()
+        self.exp_date = self.generate_exp_date()
+        logging.info(f'New card generated: {self.card_number}')
 
 def generate_number(self) -> str: 
     """
