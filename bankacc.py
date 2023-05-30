@@ -268,10 +268,22 @@ def save(self)-> None:
        
     with open('cards.json', 'a') as f:
         json.dump(data, f)
+        logging.info(f'Card data saved to file: {data}')
+
            
-def load(self, data):
-        """Load card data from a JSON object."""
-        self.card_number = data['card_number']   
-        self.cvv = data['cvv']    
-        self.exp_date = datetime.strptime(data['expiration'], '%Y-%m-%d').date() 
-    
+@staticmethod
+def load_cards() -> List['Card']:
+        """
+        Load card data from a JSON file.
+
+        Returns:
+            List[Card]: A list of Card objects
+        """
+        cards = []
+        with open('cards.json') as f:
+            for line in f:
+                data = json.loads(line)
+                card = Card(data['card_number'], data['cvv'], datetime.date.fromisoformat(data['exp_date']))
+                cards.append(card)
+        logging.info(f'Loaded {len(cards)} cards from file')
+        return cards
