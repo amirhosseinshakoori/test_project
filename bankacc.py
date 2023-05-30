@@ -208,7 +208,12 @@ def generate_number(self) -> str:
         Returns:
             str: The generated card number
     """
-    return ''.join(random.choice('0123456789') for _ in range(16))
+    digits = ["6", "1", "0", "4", "3", "3"] + random.sample(range(10), 10)
+    check_digit = self.calculate_check_digit(''.join(map(str, digits)))
+    card_number = ''.join(map(str, digits)) + str(check_digit)
+    logging.info(f'Generated new card number: {card_number}')
+    return card_number
+
 
 def generate_cvv(self) -> int:
     """
