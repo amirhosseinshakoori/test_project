@@ -138,6 +138,8 @@ class BankAccount:
         self.balance -= self.calculate_fees(amount)
         self.transaction_history.append(('Transfer', amount, recipient.account_number))
         recipient.deposit(amount)
+        logging.info(f'Transfer of {amount} T from account {self.account_number} to account {recipient.account_number}')
+
 
     def get_transaction_history(self) -> List[Tuple[str, float]]:
         """
