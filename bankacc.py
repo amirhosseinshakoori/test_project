@@ -1,3 +1,4 @@
+import logging
 import random
 import uuid
 import hashlib
@@ -6,6 +7,8 @@ import json
 import datetime
 import re
 from typing import List, Tuple
+logging.basicConfig(filename='bank.log', level=logging.INFO,
+    format='%(asctime)s:%(levelname)s:%(message)s')
 
 MIN_BALANCE = 10_000 # Minimum balance of 10_000T
 FEE = 0.005 # 0.005T fee per transaction   
@@ -72,6 +75,8 @@ class BankAccount:
         """
         self.balance += amount
         self.transaction_history.append(("Deposit", amount))
+        logging.info(f'Deposit of {amount} T to account {self.account_number}')
+
 
     def withdraw(self, amount: float) -> None:
         """
@@ -84,7 +89,9 @@ class BankAccount:
             ValueError: If the specified amount is greater than the account balance.
         """
         if self.balance - amount < MIN_BALANCE:
-             print("Insufficient funds")
+            logging.warning(f'Attempted withdrawal of {amount} T from account {self.account_number} with insufficient funds')
+            print("Insufficient funds")
+             
         else:
             self.balance -= amount + FEE
             if amount > self.balance:
@@ -92,7 +99,8 @@ class BankAccount:
             else:
              self.balance -= amount
              self.transaction_history.append(("Withdrawal", amount))
-             return True
+            logging.info(f'Withdrawal of{amount} T from account {self.account_number}')
+            return True
 
 
     def check_balance(func):
