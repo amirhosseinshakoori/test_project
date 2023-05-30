@@ -246,7 +246,9 @@ def generate_cvv(self) -> int:
        Returns:
            int: The generated CVV
     """
-    return random.randint(100, 999)
+    cvv = random.randint(100, 999)
+    logging.info(f'Generated new CVV: {cvv}')
+    return cvv
 
 def generate_exp_date(self) -> datetime.date:
     """Generate an expiration date 2 years from now."""
