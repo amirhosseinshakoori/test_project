@@ -250,9 +250,13 @@ def generate_cvv(self) -> int:
     logging.info(f'Generated new CVV: {cvv}')
     return cvv
 
+
 def generate_exp_date(self) -> datetime.date:
     """Generate an expiration date 2 years from now."""
-    return datetime.date.today() + datetime.timedelta(days=730) 
+    exp_date = datetime.date.today() + datetime.timedelta(days=random.randint(365, 1825))
+    logging.info(f'Generated new expiration date: {exp_date}')
+    return exp_date
+
 
 def save(self)-> None:
     """Save the card data to a JSON file."""
