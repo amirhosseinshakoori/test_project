@@ -204,6 +204,7 @@ class BankAccount:
 
 
 
+
     def get_transaction_history(self) -> List[Tuple[str, float]]:
         """
         Get the transaction history for the account.
@@ -264,18 +265,14 @@ class Card:
         self.exp_date = self.generate_exp_date()
         logging.info(f'New card generated: {self.card_number}')
 
-def generate_number(self) -> str: 
-    """
-        Generate a random 16-digit card number.
-        
-        Returns:
-            str: The generated card number
-    """
-    digits = ["6", "1", "0", "4", "3", "3"] + random.sample(range(10), 10)
-    check_digit = self.calculate_check_digit(''.join(map(str, digits)))
-    card_number = ''.join(map(str, digits)) + str(check_digit)
-    logging.info(f'Generated new card number: {card_number}')
-    return card_number
+
+   @staticmethod    
+   def generate_number() -> str:
+         digits = ["6", "1", "0", "4", "3", "3"] + random.sample(range(10), 9)
+         check_digit = Card.calculate_check_digit(''.join(map(str, digits)))  
+         card_number = ''.join(map(str, digits)) + str(check_digit)
+         logging.info(f'Generated new card number: {card_number}')
+         return card_number
 
 
 def calculate_check_digit(self, number: str) -> int:
