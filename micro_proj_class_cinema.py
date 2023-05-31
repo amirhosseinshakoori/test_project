@@ -1,6 +1,10 @@
 import json
 from datetime import datetime
+import logging
 
+
+logging.basicConfig(filename='cinematicket.log', level=logging.INFO,
+    format='%(asctime)s:%(levelname)s:%(message)s')
 
 class Cinema:
     def __init__(self):
@@ -37,6 +41,7 @@ class Cinema:
         }
         self.movies.append(movie)
         self._update_movie_json()
+        logging.info(f'add {movie_name} ' )
         return True
 
     def _update_movie_json(self) -> None:
@@ -61,6 +66,7 @@ class Cinema:
         """
         with open(json_file, "r") as file:
             self.movies = json.load(file)
+        logging.info(f'load movies ' )
 
     def make_changes(self, special_code: str, changes: dict) -> bool:
         """
@@ -77,6 +83,7 @@ class Cinema:
             if movie["special_code"] == special_code:
                 movie.update(changes)
                 self._update_movie_json()
+                logging.info(f'change movies {changes}' )
                 return True
         return False
 
@@ -94,6 +101,7 @@ class Cinema:
             if movie["special_code"] == special_code:
                 self.movies.remove(movie)
                 self._update_movie_json()
+                logging.info(f'remove movies {movie}' )
                 return True
         return False
 
@@ -116,18 +124,21 @@ class Cinema:
                 movie_date_time = datetime.strptime(movie["date_time"], "%Y-%m-%d %H:%M")
                 if current_time > movie_date_time:
                     print("Sorry, the movie has already started.")
+                    logging.info(f'the movie has already starte')
                     return False
                 elif movie["capacity"] <= 0:
                     print("Sorry, the movie is already sold out.")
+                    logging.info(f'the movie is already sold out')
                     return False
                 elif user_age < movie["age_group"]:
                     print("Sorry, this movie is not suitable for your age.")
+                    logging.info(f' movie is not suitable for your age')
                     return False
                 else:
                     movie["capacity"] -= 1
                     self._update_movie_json()
                     self._add_reservation(movie["movie_name"], special_code)
-                    
+                    logging.info(f'reserve movies {movie}' )
                     return True
                     break
         if i ==0:
@@ -179,6 +190,7 @@ class Cinema:
                 self.reservations.remove(reservation)
                 self._update_reservation_json()
                 self._return_capacity(special_code)
+                logging.info(f' remove movie reserve {special_code}' )
                 return True
         return False
 
@@ -195,6 +207,7 @@ class Cinema:
         for movie in self.movies:
             if movie["special_code"] == special_code:
                 movie["capacity"] += 1
+                logging.info(f'  movie capacity add {special_code}' )
                 self._update_movie_json()
                 break
     
@@ -202,6 +215,7 @@ class Cinema:
 
         for movie in self.movies:
             if movie["special_code"] == special_code:
+               logging.info(f' price of movie reterned {special_code}' )
                return  movie["price"]
                break
 
@@ -212,6 +226,9 @@ class Cinema:
         Returns:
             None
         """
+        with open("movies.json", "r") as file:
+            self.movies = json.load(file)
+            logging.info(f'load movies ' )
         for movie in self.movies:
             movie_name = movie.get("movie_name", "N/A")
             special_code = movie.get("special_code", "N/A")
@@ -231,3 +248,5 @@ class Cinema:
             print(f"Genre: {genre}")
             print(f"Theater: {theater}")
             print("------------------------------------")
+
+
