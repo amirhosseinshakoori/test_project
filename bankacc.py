@@ -66,7 +66,7 @@ class BankAccount:
             hashed_password = hash_object.hexdigest()
         return hashed_password
     
-    
+
     
     def deposit(self, amount: float) -> None:
         """
@@ -104,18 +104,17 @@ class BankAccount:
 
 
     def check_balance(func):
-    
-        def wrapper(self, *args, **kwargs):  
-      
-        # Check if account has enough balance
+        """Decorator to check if account has enough balance before executing a transaction."""
+        def wrapper(self, *args, **kwargs): 
+       # Check if account has enough balance
             if self.balance < MIN_BALANCE:
-                print("Insufficient funds") 
-            return
-            
-       # Call original function   
+             print("Insufficient funds")
+            return None
+         # Call original function
             return func(self, *args, **kwargs)
-        
         return wrapper
+    
+    
 
     def transfer(self, amount: float, recipient: 'BankAccount', password: str) -> None:
         """
