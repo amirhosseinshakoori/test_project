@@ -114,31 +114,40 @@ class BankAccount:
             return func(self, *args, **kwargs)
         return wrapper
     
-    
 
-    def transfer(self, amount: float, recipient: 'BankAccount', password: str) -> None:
+
+    def transfer(self, amount: float, recipient: Optional['BankAccount'], password: str) -> None:
         """
         Transfer funds to another account.
 
         Args:
+            self (BankAccount): The account sending the transfer.
             amount (float): The amount to transfer.
-            recipient (BankAccount): The account to transfer funds to.
+            recipient (Optional[BankAccount]): The account receiving the transfer, or None if the recipient doesn't exist.
             password (str): The password for the sender's account.
 
         Raises:
-            ValueError: If the specified amount is greater than the 
-            account balance or if the password is incorrect.
+            ValueError: If the specified amount is greater than the account balance or
+            if the password is incorrect.
         """
+        if amount <= 0:
+            raise ValueError("Invalid amount")
         if amount > self.balance:
-            raise ValueError("Insufficient balance")
+            raise ValueError("Insufficient balance for transfer")
         if password != self.password:
-            raise ValueError("Incorrect password")
-        self.balance -= amount
-        self.balance -= self.calculate_fees(amount)
-        self.transaction_history.append(('Transfer', amount, recipient.account_number))
-        recipient.deposit(amount)
-        logging.info(f'Transfer of {amount} T from account {self.account_number} to account {recipient.account_number}')
-
+            raise ValueError("Incorrect password for transfer")
+        if recipient is not None:
+            recipient.deposit(amount)
+            self.balance -= amount
+            self.balance -= self.calculate_fees(amount)
+            self.transaction_history.append(('Transfer', amount, recipient.account_number))
+            logging.info(f'Transfer of {amount} T from account {self.account_number} to account {recipient.account_number}')
+        else:
+            self.balance -= self.calculate_fees(amount)
+            self.transaction_history.append(('Transfer', amount, "Non-existent account"))
+            logging.info(f'Transfer of {amount} T from account {self.account_number} to non-existent account')
+    
+    
     
     def charge_wallet(card_number: str, cvv: str, password: str, amount: float) -> float:
         """
