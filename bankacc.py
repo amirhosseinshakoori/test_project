@@ -169,6 +169,38 @@ class BankAccount:
         logging.info(f'Charge of {transferred_amount:.2f} T to wallet using account {account.account_number}')
   
         return transferred_amount
+    
+
+    def transfer_funds(card_number, cvv, password, amount, recipient):
+        """
+        Transfer funds from an account given card details and recipient.
+        Args:
+        card_number (str): The card number associated with the account
+        cvv (str): The card security code 
+        password (str): The account password   
+        amount (float): The amount to transfer 
+        recipient (BankAccount): The account to transfer funds to
+    
+        Returns:
+        float: The amount actually transferred after fees  
+
+        Raises:
+        ValueError: If credentials are invalid or insufficient funds  
+        """ 
+        self = BankAccount(card_number)  
+        if not self.authenticate(cvv, password):
+            raise ValueError("Incorrect card details")  
+
+        if amount > self.balance:
+            raise ValueError("Insufficient funds")
+     
+        self.transfer(amount, recipient, password)
+
+        transfer_amount = amount - self.calculate_fees(amount)  
+        self.transaction_history.append(('Transfer', transfer_amount, recipient.account_number))  
+        recipient.deposit(transfer_amount)     
+    
+        return transfer_amount
 
 
 
