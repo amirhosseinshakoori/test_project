@@ -281,27 +281,24 @@ class Card:
         return card_number
 
 
-def calculate_check_digit(self, number: str) -> int:
-    """
-    Calculate the check digit for a given card number using the Luhn algorithm.
 
-    Args:
+   @staticmethod      
+   def calculate_check_digit(number: str) -> int:
+        """
+        Calculates the check digit for a card number using the Luhn algorithm.
+        
+        Args:
         number (str): The card number to calculate the check digit for.
-
-    Returns:
-        int: The check digit.
-    """
-    # Reverse the card number and convert each digit to an integer
-    digits = list(map(int, reversed(number)))
-    # Double every other digit, starting from the second digit
-    doubled_digits = [2 * digit if i % 2 == 1 else digit for i, digit in enumerate(digits)]
-    # Subtract 9 from any digits larger than 9
-    subtracted_digits = [digit - 9 if digit > 9 else digit for digit in doubled_digits]
-    # Calculate the sum of all digits
-    total = sum(subtracted_digits)
-    # Calculate the check digit
-    check_digit = (10 - (total % 10)) % 10
-    return check_digit
+        
+        Returns:
+        int: The calculated check digit.
+        """
+        digits = list(map(int, reversed(number)))
+        doubled_digits = [2 * digit if i % 2 == 1 else digit for i, digit in enumerate(digits)]
+        subtracted_digits = [digit - 9 if digit > 9 else digit for digit in doubled_digits]
+        total = sum(subtracted_digits)
+        check_digit = (10 - (total % 10)) % 10
+        return check_digit
 
 
 
