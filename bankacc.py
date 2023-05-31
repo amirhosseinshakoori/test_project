@@ -31,7 +31,7 @@ class BankAccount:
         self.balance = balance   
         self.account_number = str(uuid.uuid4())[:8] 
         self.password = self.set_password()    
-        self.card = Card().generate_card(self.account_number)
+        self.card = Card.generate_card(self.account_number)
         self.transaction_history = []
         BankAccount.accounts[self.card.card_number] = self
 
@@ -323,21 +323,22 @@ class Card:
         return exp_date
 
 
-def save(self)-> None:
-    """Save the card data to a JSON file."""
-    data = {
+    
+   def save(self)-> None:
+        """Save the card data to a JSON file."""
+        data = {
         "card_number": self.card_number,
         "cvv": self.cvv,
         "expiration": self.exp_date.isoformat()  
        }
        
-    with open('cards.json', 'a') as f:
+        with open('cards.json', 'a') as f:
         json.dump(data, f)
         logging.info(f'Card data saved to file: {data}')
 
            
-@staticmethod
-def load_cards() -> List['Card']:
+   @staticmethod
+   def load_cards() -> List['Card']:
         """
         Load card data from a JSON file.
 
