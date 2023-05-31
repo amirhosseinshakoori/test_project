@@ -6,7 +6,7 @@ class DiscountTest(unittest.TestCase):
     def test_birthday_discount(self):
         # Set up
         today = date.today()
-        username = "JohnDoe"
+        username = "mohammad goodarzi"
         birth_date = date(today.year, today.month, today.day)  # Same birth date as today
         registration_date = date(2022, 1, 1)  # A specific registration date
         discount = Discount(username, birth_date, registration_date)
@@ -20,7 +20,7 @@ class DiscountTest(unittest.TestCase):
     def test_membership_discount(self):
         # Set up
         today = date.today()
-        username = "JaneSmith"
+        username = "alireza"
         birth_date = date(2000, 5, 1)  # A specific birth date
         registration_date = date(today.year, today.month, today.day)  # Same registration date as today
         discount = Discount(username, birth_date, registration_date)
