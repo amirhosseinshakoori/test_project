@@ -51,20 +51,22 @@ class BankAccount:
         self._balance = value
 
 
-    def set_password(self, password: str) -> None:
+    def set_password(self, password: str, password2) -> None:
         """
         Set the password for the account.
 
         Args:
             password (str): The new password for the account.
         """
-        password = getpass.getpass()
-        password2 = getpass.getpass()
+        
+        
         if password == password2:  
             password = password.encode()     
             hash_object = hashlib.sha256(password)
             hashed_password = hash_object.hexdigest()
         return hashed_password
+    
+    
     
     def deposit(self, amount: float) -> None:
         """
