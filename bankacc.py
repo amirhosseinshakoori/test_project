@@ -140,6 +140,37 @@ class BankAccount:
         recipient.deposit(amount)
         logging.info(f'Transfer of {amount} T from account {self.account_number} to account {recipient.account_number}')
 
+    
+    def charge_wallet(card_number: str, cvv: str, password: str, amount: float) -> float:
+        """
+        Charge a wallet using the specified account's card details.
+
+        Args:
+            card_number (str): The card number associated with the account.
+            cvv (str): The card security code.
+            password (str): The account password.
+            amount (float): The amount to charge the wallet.
+
+            Returns:
+            float: The amount successfully charged to the wallet.
+
+        Raises:
+            ValueError: If the specified credentials are invalid or if the account has insufficient funds.
+        """
+        if card_number not in BankAccount.accounts:
+         raise ValueError("Invalid card details")
+  
+        account = BankAccount.accounts[card_number]
+        try:
+            transferred_amount = account.validate_transfer(amount, None, password, card_number, cvv)
+        except ValueError as error:
+            raise ValueError(str(error))
+  
+        logging.info(f'Charge of {transferred_amount:.2f} T to wallet using account {account.account_number}')
+  
+        return transferred_amount
+
+
 
     def get_transaction_history(self) -> List[Tuple[str, float]]:
         """
