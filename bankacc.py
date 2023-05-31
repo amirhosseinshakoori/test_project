@@ -6,7 +6,7 @@ import getpass
 import json
 import datetime
 import re
-from typing import List, Tuple
+from typing import List, Tuple,Optional
 logging.basicConfig(filename='bank.log', level=logging.INFO,
     format='%(asctime)s:%(levelname)s:%(message)s')
 
@@ -147,7 +147,7 @@ class BankAccount:
             self.transaction_history.append(('Transfer', amount, "Non-existent account"))
             logging.info(f'Transfer of {amount} T from account {self.account_number} to non-existent account')
     
-    
+
     
     def charge_wallet(card_number: str, cvv: str, password: str, amount: float) -> float:
         """
@@ -172,6 +172,7 @@ class BankAccount:
         try:
             transferred_amount = account.validate_transfer(amount, None, password, card_number, cvv)
         except ValueError as error:
+            logging.error(str(error))
             raise ValueError(str(error))
   
         logging.info(f'Charge of {transferred_amount:.2f} T to wallet using account {account.account_number}')
@@ -211,7 +212,41 @@ class BankAccount:
         return transfer_amount
 
 
+    def validate_transfer(self, amount: float, recipient: Optional['BankAccount'], password: str, card_number: str, cvv: str) -> float:
+        """
+        Validate a transfer of funds from the account.
 
+        Args:
+        amount (float): The amount to transfer.
+        recipient (Optional[BankAccount]): The account to transfer the funds to, or None if the transfer is a charge.
+        password (str): The password for the account.
+        card_number (str): The card number associated with the account.
+        cvv (str): The card security code.
+
+        Returns:
+         float: The amount successfully transferred.
+
+        Raises:
+         ValueError: If the specified amount is greater than the account balance or if the password is incorrect.
+        """
+        if amount <= 0:
+            raise ValueError("Invalid amount")
+        if password != self.password or card_number not in BankAccount.accounts:
+         raise ValueError("Invalid credentials")
+        if amount > self.balance:
+         raise ValueError("Insufficient funds")
+        if recipient is not None and recipient.account_number not in BankAccount.accounts:
+         raise ValueError("Invalid recipient account number")
+
+        self.balance -= amount
+        if recipient is not None:
+            recipient.balance += amount
+            transferred_amount = amount
+        else:
+            transferred_amount = amount - self.calculate_fees(amount)
+
+        return transferred_amount
+    
 
     def get_transaction_history(self) -> List[Tuple[str, float]]:
         """
