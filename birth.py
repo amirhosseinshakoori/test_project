@@ -8,6 +8,9 @@ class Discount:
         self.registration_date = registration_date
 
     def apply_discount(self):
+        """
+        get birthday and get today datetime and calculate if you get fifty precent for discount
+        """
         today = date.today()
         if today.month == self.birth_date.month and today.day == self.birth_date.day:
             discount_rate = 0.5  # 50% discount on the ticket price
