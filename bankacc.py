@@ -268,11 +268,17 @@ class Card:
 
    @staticmethod    
    def generate_number() -> str:
-         digits = ["6", "1", "0", "4", "3", "3"] + random.sample(range(10), 9)
-         check_digit = Card.calculate_check_digit(''.join(map(str, digits)))  
-         card_number = ''.join(map(str, digits)) + str(check_digit)
-         logging.info(f'Generated new card number: {card_number}')
-         return card_number
+        """
+        Generates a random 16-digit card number with a valid check digit.
+        
+        Returns:
+        str: The generated card number.
+        """
+        digits = ["6", "1", "0", "4", "3", "3"] + random.sample(range(10), 9)
+        check_digit = Card.calculate_check_digit(''.join(map(str, digits)))  
+        card_number = ''.join(map(str, digits)) + str(check_digit)
+        logging.info(f'Generated new card number: {card_number}')
+        return card_number
 
 
 def calculate_check_digit(self, number: str) -> int:
