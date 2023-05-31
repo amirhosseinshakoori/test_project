@@ -78,7 +78,7 @@ class BankAccount:
         logging.info(f'Deposit of {amount} T to account {self.account_number}')
 
 
-    def withdraw(self, amount: float) -> None:
+    def withdraw(self, amount: float) -> bool:
         """
         Subtract funds from the account balance.
 
@@ -87,20 +87,18 @@ class BankAccount:
 
         Raises:
             ValueError: If the specified amount is greater than the account balance.
+
+        Returns:
+            bool: True if the withdrawal is successful, False otherwise.
         """
         if self.balance - amount < MIN_BALANCE:
             logging.warning(f'Attempted withdrawal of {amount} T from account {self.account_number} with insufficient funds')
-            print("Insufficient funds")
-             
+            raise ValueError("Insufficient funds")
         else:
             self.balance -= amount + FEE
-            if amount > self.balance:
-                return False
-            else:
-             self.balance -= amount
-             self.transaction_history.append(("Withdrawal", amount))
-            logging.info(f'Withdrawal of{amount} T from account {self.account_number}')
-            return True
+            self.transaction_history.append(("Withdrawal", amount))
+            logging.info(f'Withdrawal of {amount} T from account {self.account_number}')
+        return True
 
 
     def check_balance(func):
@@ -333,7 +331,7 @@ class Card:
        }
        
         with open('cards.json', 'a') as f:
-        json.dump(data, f)
+            json.dump(data, f)
         logging.info(f'Card data saved to file: {data}')
 
            
