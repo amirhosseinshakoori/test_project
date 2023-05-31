@@ -302,7 +302,8 @@ class Card:
 
 
 
-def generate_cvv(self) -> int:
+   @staticmethod        
+   def generate_cvv() -> int:
     """
        Generate a random 3-digit CVV.
        
@@ -314,11 +315,12 @@ def generate_cvv(self) -> int:
     return cvv
 
 
-def generate_exp_date(self) -> datetime.date:
-    """Generate an expiration date 2 years from now."""
-    exp_date = datetime.date.today() + datetime.timedelta(days=random.randint(365, 1825))
-    logging.info(f'Generated new expiration date: {exp_date}')
-    return exp_date
+   @staticmethod        
+   def generate_exp_date() -> datetime.date:
+        """Generate an expiration date 2 years from now."""
+        exp_date = datetime.date.today() + datetime.timedelta(days=random.randint(365, 1825))
+        logging.info(f'Generated new expiration date: {exp_date}')
+        return exp_date
 
 
 def save(self)-> None:
