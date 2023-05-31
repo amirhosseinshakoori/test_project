@@ -15,6 +15,7 @@ FEE = 0.005 # 0.005T fee per transaction
 
 class BankAccount:
     
+    account_number_counter = 0
     accounts = {}   # Stores all accounts 
     
     def __init__(self,name: str, balance=0, password="", card=None):
@@ -26,7 +27,7 @@ class BankAccount:
             balance (float, optional): The initial account balance. Defaults to 0.
             password (str, optional): The password for the account. Defaults to ''.
         """
-        # 
+        
         self.name = name 
         self.balance = balance   
         self.account_number = str(uuid.uuid4())[:8] 
@@ -34,6 +35,13 @@ class BankAccount:
         self.card = Card.generate_card(self.account_number)
         self.transaction_history = []
         BankAccount.accounts[self.card.card_number] = self
+
+
+    def generate_account_number(self):
+        BankAccount.account_number_counter += 1
+        return f"ACC{BankAccount.account_number_counter:06d}"
+
+
 
     @property
     def balance(self) -> float:
